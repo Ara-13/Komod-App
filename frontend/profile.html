@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>کمد من</title>
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">کمد من</div>
+            <div class="header-icons">
+                <button class="icon-btn" id="hamburger-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Profile Info -->
+            <section class="profile-info-section">
+                <div class="profile-header">
+                    <div class="avatar">م</div>
+                    <div class="profile-name-box">
+                        <h1 class="profile-name">مریم <i class="fa-solid fa-circle-check verified-badge"></i></h1>
+                    </div>
+                </div>
+                <button class="outline-btn share-btn">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i> اشتراک‌گذاری پروفایل
+                </button>
+            </section>
+            
+            <!-- Stats -->
+            <section class="stats-section">
+                <div class="stat-box active-stat">
+                    <span class="stat-number">۴۱۹</span>
+                    <span class="stat-label">لباس‌ها</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">۳۷۷</span>
+                    <span class="stat-label">ست‌ها</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">۸</span>
+                    <span class="stat-label">کالکشن‌ها</span>
+                </div>
+            </section>
+            
+            <!-- Filters & Sort -->
+            <section class="filters-section">
+                <div class="chips-container">
+                    <button class="chip active">بالاتنه</button>
+                    <button class="chip">پایین‌تنه</button>
+                    <button class="chip">کفش</button>
+                    <button class="chip">اکسسوری</button>
+                    <button class="chip">لباس بیرون</button>
+                </div>
+                <div class="sort-container">
+                    <button class="sort-btn">جدیدترین <i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+            </section>
+            
+            <!-- Clothes Grid -->
+            <section class="clothes-grid">
+                <!-- item 1 -->
+                <div class="clothing-sticker">
+                    <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
+                </div>
+                <!-- item 2 -->
+                <div class="clothing-sticker">
+                    <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
+                </div>
+                <!-- item 3 -->
+                <div class="clothing-sticker">
+                    <img src="assets/blue_top_1786548044228.jpg" alt="Top">
+                </div>
+                <!-- item 4 -->
+                <div class="clothing-sticker">
+                    <img src="assets/shopping_sneaker_1786518703474.jpg" alt="Sneaker">
+                </div>
+                <!-- item 5 -->
+                <div class="clothing-sticker">
+                    <img src="assets/sporty_outfit_1786518654738.jpg" alt="Sporty">
+                </div>
+                <!-- item 6 -->
+                <div class="clothing-sticker">
+                    <img src="assets/casual_outfit_1786518617507.jpg" alt="Casual">
+                </div>
+                <!-- item 7 (duplicate for more scroll) -->
+                <div class="clothing-sticker">
+                    <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
+                </div>
+                <!-- item 8 -->
+                <div class="clothing-sticker">
+                    <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
+                </div>
+                <!-- item 9 -->
+                <div class="clothing-sticker">
+                    <img src="assets/blue_top_1786548044228.jpg" alt="Top">
+                </div>
+            </section>
+            
+            <!-- Fancy Shopping Suggestions -->
+            <section class="suggestions-section fancy-suggestions" style="margin-top: 32px;">
+                <div class="suggestions-header">
+                    <h3 class="fancy-title">پیشنهادهای ویژه شما ✨</h3>
+                    <a href="#" class="see-all-link">مشاهده همه</a>
+                </div>
+                <div class="reasoning-list">
+                    <!-- Reasoning Item 1 -->
+                    <div class="reasoning-item right-aligned">
+                        <div class="reasoning-bg">
+                            <p class="reasoning-text">کیف چرم مشکی همیشه یک آیتم کلاسیک و ضروریه. این مدل با توجه به لباس‌های کژوال کمدت، یه ترکیب بی‌نقص و جذاب می‌سازه که هر روز می‌تونی استفاده کنی.</p>
+                            <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
+                        </div>
+                        <div class="reasoning-product-card" data-suggestion-card>
+                            <div class="reasoning-image">
+                                <img src="assets/black_bag_1786548022857.jpg" alt="کیف مشکی">
+                                <div class="reasoning-badges">
+                                    <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
+                                </div>
+                            </div>
+                            <div class="reasoning-info">
+                                <h4 class="reasoning-item-title">کیف چرم مشکی</h4>
+                                <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> چرمینه</span>
+                                <div class="reasoning-price-row">
+                                    <div class="prices">
+                                        <span class="new-price">۳,۲۰۰,۰۰۰ تومان</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reasoning Item 2 -->
+                    <div class="reasoning-item left-aligned">
+                        <div class="reasoning-bg">
+                            <p class="reasoning-text">شما اخیراً شلوار جین‌های زیادی پوشیدی. این کت سفید کژوال دقیقاً همون چیزیه که استایلت رو از یکنواختی در میاره و برای دورهمی‌های دوستانه عالیه!</p>
+                            <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
+                        </div>
+                        <div class="reasoning-product-card" data-suggestion-card>
+                            <div class="reasoning-image">
+                                <img src="assets/white_jacket_1786547991722.jpg" alt="ژاکت سفید">
+                                <div class="reasoning-badges">
+                                    <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
+                                </div>
+                            </div>
+                            <div class="reasoning-info">
+                                <h4 class="reasoning-item-title">ژاکت سفید کژوال</h4>
+                                <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> بوتیک شیک</span>
+                                <div class="reasoning-price-row">
+                                    <div class="prices">
+                                        <span class="new-price">۱,۸۵۰,۰۰۰ تومان</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fa-regular fa-calendar"></i>
+                <span>تقویم</span>
+            </a>
+            <a href="#" class="nav-item" id="add-action-btn-profile">
+                <div class="fab-inline">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <span class="hidden-text">افزودن</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="fa-solid fa-user"></i>
+                <span>کمد من</span>
+            </a>
+        </nav>
+
+        <!-- Add Action Modal -->
+        <div class="modal-overlay action-modal-overlay" id="add-action-modal-profile">
+            <div class="action-menu-container">
+                <div class="action-grid">
+                    <button class="action-card">
+                        <i class="fa-regular fa-images"></i>
+                        <span>انتخاب عکس‌ها</span>
+                    </button>
+                    <button class="action-card">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>گرفتن عکس</span>
+                    </button>
+                    <button class="action-card">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>جستجوی لباس‌ها</span>
+                    </button>
+                    <button class="action-card">
+                        <i class="fa-solid fa-shirt"></i>
+                        <span>ساخت ست لباس</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Hamburger Menu -->
+        <div class="modal-overlay sidebar-overlay" id="sidebar-modal">
+            <div class="sidebar-content glass-card">
+                <div class="sidebar-header">
+                    <h2>منوی کاربری</h2>
+                    <button class="icon-btn small close-sidebar" id="close-sidebar-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="sidebar-menu">
+                    <a href="#" class="sidebar-item"><i class="fa-solid fa-gear"></i> تنظیمات</a>
+                    <a href="#" class="sidebar-item"><i class="fa-regular fa-bookmark"></i> ذخیره شده‌ها</a>
+                    <a href="#" class="sidebar-item"><i class="fa-solid fa-circle-info"></i> راهنما و پشتیبانی</a>
+                    <a href="#" class="sidebar-item text-error"><i class="fa-solid fa-arrow-right-from-bracket"></i> خروج از حساب</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cloth Item View Modal -->
+        <div class="modal-overlay" id="cloth-view-modal">
+            <div class="modal-content glass-card no-pad cloth-view-card">
+                <div class="outfit-detail-image image-wrapper cloth-modal-image">
+                    <img id="cloth-modal-img" src="" alt="لباس">
+                    <button class="icon-btn small close-modal floating-close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="outfit-modal-body cloth-modal-body">
+                    <h3 id="cloth-modal-title">جزئیات لباس</h3>
+                    <div class="suggestion-actions stack">
+                        <button class="action-btn edit-btn" style="flex: 1;"><i class="fa-solid fa-pen"></i> ویرایش</button>
+                        <button class="action-btn text-error bg-error-light" style="flex: 1;"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
