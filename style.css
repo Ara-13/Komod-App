@@ -965,27 +965,27 @@ textarea.form-input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding-top: 10px;
+    gap: 12px;
+    padding-top: 8px;
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     width: 100%;
 }
 
 .avatar {
-    width: 64px;
-    height: 64px;
+    width: 52px;
+    height: 52px;
     background-color: var(--color-light);
     color: var(--color-dark);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 800;
 }
 
@@ -995,27 +995,27 @@ textarea.form-input {
 }
 
 .profile-name {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 800;
     color: var(--text-dark);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .verified-badge {
     color: #3b82f6;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .outline-btn {
     width: 100%;
-    padding: 12px;
+    padding: 8px;
     border: 1px solid var(--color-medium);
     border-radius: var(--radius-sm);
     background-color: transparent;
     color: var(--text-dark);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -1032,7 +1032,7 @@ textarea.form-input {
 .stats-section {
     display: flex;
     justify-content: space-around;
-    padding: 16px 0;
+    padding: 12px 0;
     border-bottom: 1px solid rgba(116, 81, 45, 0.1);
 }
 
@@ -1040,17 +1040,17 @@ textarea.form-input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 }
 
 .stat-number {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
     color: var(--text-dark);
 }
 
 .stat-label {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-gray);
     font-weight: 600;
 }
@@ -1058,6 +1058,53 @@ textarea.form-input {
 .active-stat .stat-number,
 .active-stat .stat-label {
     color: var(--color-dark);
+}
+
+.profile-tabs-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0 16px;
+}
+
+.profile-tabs {
+    display: flex;
+    background-color: rgba(116, 81, 45, 0.05);
+    border-radius: 20px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background-color: var(--white);
+    color: var(--text-dark);
+    box-shadow: 0 2px 8px rgba(116, 81, 45, 0.1);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .filters-section {
@@ -1115,11 +1162,78 @@ textarea.form-input {
 }
 
 /* Clothes Grid (Sticker Effect) */
+.closet-preview-wrapper {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.closet-preview-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(239, 233, 227, 0) 0%, rgba(239, 233, 227, 1) 100%);
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+    z-index: 5;
+}
+
+.closet-preview-wrapper.expanded::after {
+    opacity: 0;
+}
+
 .clothes-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    padding-bottom: 24px;
+    padding-bottom: 8px;
+    
+    max-height: 240px; 
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.clothes-grid.expanded {
+    max-height: 2000px;
+}
+
+.closet-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: -10px; /* pull up slightly over the fade */
+    position: relative;
+    z-index: 10;
+}
+
+.view-all-closet-btn {
+    background: var(--white);
+    border: 1px solid var(--color-light);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-medium);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(116, 81, 45, 0.08);
+    transition: all 0.3s ease;
+}
+
+.view-all-closet-btn:hover {
+    color: var(--color-dark);
+    box-shadow: 0 6px 16px rgba(116, 81, 45, 0.12);
+}
+
+.view-all-closet-btn i {
+    transition: transform 0.3s ease;
+}
+
+.view-all-closet-btn.expanded i {
+    transform: rotate(180deg);
 }
 
 .clothing-sticker {

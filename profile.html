@@ -53,118 +53,139 @@
                 </div>
             </section>
             
-            <!-- Filters & Sort -->
-            <section class="filters-section">
-                <div class="chips-container">
-                    <button class="chip active">بالاتنه</button>
-                    <button class="chip">پایین‌تنه</button>
-                    <button class="chip">کفش</button>
-                    <button class="chip">اکسسوری</button>
-                    <button class="chip">لباس بیرون</button>
+            <!-- Profile Tabs -->
+            <div class="profile-tabs-container">
+                <div class="profile-tabs">
+                    <button class="tab-btn active" data-target="suggestions-tab">پیشنهادهای ویژه</button>
+                    <button class="tab-btn" data-target="clothes-tab">لباس‌های شما</button>
                 </div>
-                <div class="sort-container">
-                    <button class="sort-btn">جدیدترین <i class="fa-solid fa-chevron-down"></i></button>
-                </div>
-            </section>
+            </div>
+
+            <!-- Suggestions Tab Content (Default) -->
+            <div id="suggestions-tab" class="tab-content active">
+                <!-- Fancy Shopping Suggestions -->
+                <section class="suggestions-section fancy-suggestions" style="margin-top: 16px;">
+                    <div class="suggestions-header" style="margin-bottom: 12px;">
+                        <h3 class="fancy-title">پیشنهادهای ویژه شما ✨</h3>
+                        <a href="#" class="see-all-link">مشاهده همه</a>
+                    </div>
+                    <div class="reasoning-list">
+                        <!-- Reasoning Item 1 -->
+                        <div class="reasoning-item right-aligned">
+                            <div class="reasoning-bg">
+                                <p class="reasoning-text">کیف چرم مشکی همیشه یک آیتم کلاسیک و ضروریه. این مدل با توجه به لباس‌های کژوال کمدت، یه ترکیب بی‌نقص و جذاب می‌سازه که هر روز می‌تونی استفاده کنی.</p>
+                                <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
+                            </div>
+                            <div class="reasoning-product-card" data-suggestion-card>
+                                <div class="reasoning-image">
+                                    <img src="assets/black_bag_1786548022857.jpg" alt="کیف مشکی">
+                                    <div class="reasoning-badges">
+                                        <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
+                                    </div>
+                                </div>
+                                <div class="reasoning-info">
+                                    <h4 class="reasoning-item-title">کیف چرم مشکی</h4>
+                                    <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> چرمینه</span>
+                                    <div class="reasoning-price-row">
+                                        <div class="prices">
+                                            <span class="new-price">۳,۲۰۰,۰۰۰ تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reasoning Item 2 -->
+                        <div class="reasoning-item left-aligned">
+                            <div class="reasoning-bg">
+                                <p class="reasoning-text">شما اخیراً شلوار جین‌های زیادی پوشیدی. این کت سفید کژوال دقیقاً همون چیزیه که استایلت رو از یکنواختی در میاره و برای دورهمی‌های دوستانه عالیه!</p>
+                                <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
+                            </div>
+                            <div class="reasoning-product-card" data-suggestion-card>
+                                <div class="reasoning-image">
+                                    <img src="assets/white_jacket_1786547991722.jpg" alt="ژاکت سفید">
+                                    <div class="reasoning-badges">
+                                        <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
+                                    </div>
+                                </div>
+                                <div class="reasoning-info">
+                                    <h4 class="reasoning-item-title">ژاکت سفید کژوال</h4>
+                                    <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> بوتیک شیک</span>
+                                    <div class="reasoning-price-row">
+                                        <div class="prices">
+                                            <span class="new-price">۱,۸۵۰,۰۰۰ تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Clothes Tab Content -->
+            <div id="clothes-tab" class="tab-content">
+                <!-- Filters & Sort -->
+                <section class="filters-section">
+                    <div class="chips-container">
+                        <button class="chip active">بالاتنه</button>
+                        <button class="chip">پایین‌تنه</button>
+                        <button class="chip">کفش</button>
+                        <button class="chip">اکسسوری</button>
+                        <button class="chip">لباس بیرون</button>
+                    </div>
+                </section>
             
             <!-- Clothes Grid -->
-            <section class="clothes-grid">
-                <!-- item 1 -->
-                <div class="clothing-sticker">
-                    <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
-                </div>
-                <!-- item 2 -->
-                <div class="clothing-sticker">
-                    <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
-                </div>
-                <!-- item 3 -->
-                <div class="clothing-sticker">
-                    <img src="assets/blue_top_1786548044228.jpg" alt="Top">
-                </div>
-                <!-- item 4 -->
-                <div class="clothing-sticker">
-                    <img src="assets/shopping_sneaker_1786518703474.jpg" alt="Sneaker">
-                </div>
-                <!-- item 5 -->
-                <div class="clothing-sticker">
-                    <img src="assets/sporty_outfit_1786518654738.jpg" alt="Sporty">
-                </div>
-                <!-- item 6 -->
-                <div class="clothing-sticker">
-                    <img src="assets/casual_outfit_1786518617507.jpg" alt="Casual">
-                </div>
-                <!-- item 7 (duplicate for more scroll) -->
-                <div class="clothing-sticker">
-                    <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
-                </div>
-                <!-- item 8 -->
-                <div class="clothing-sticker">
-                    <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
-                </div>
-                <!-- item 9 -->
-                <div class="clothing-sticker">
-                    <img src="assets/blue_top_1786548044228.jpg" alt="Top">
-                </div>
-            </section>
-            
-            <!-- Fancy Shopping Suggestions -->
-            <section class="suggestions-section fancy-suggestions" style="margin-top: 32px;">
-                <div class="suggestions-header">
-                    <h3 class="fancy-title">پیشنهادهای ویژه شما ✨</h3>
-                    <a href="#" class="see-all-link">مشاهده همه</a>
-                </div>
-                <div class="reasoning-list">
-                    <!-- Reasoning Item 1 -->
-                    <div class="reasoning-item right-aligned">
-                        <div class="reasoning-bg">
-                            <p class="reasoning-text">کیف چرم مشکی همیشه یک آیتم کلاسیک و ضروریه. این مدل با توجه به لباس‌های کژوال کمدت، یه ترکیب بی‌نقص و جذاب می‌سازه که هر روز می‌تونی استفاده کنی.</p>
-                            <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
-                        </div>
-                        <div class="reasoning-product-card" data-suggestion-card>
-                            <div class="reasoning-image">
-                                <img src="assets/black_bag_1786548022857.jpg" alt="کیف مشکی">
-                                <div class="reasoning-badges">
-                                    <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
-                                </div>
-                            </div>
-                            <div class="reasoning-info">
-                                <h4 class="reasoning-item-title">کیف چرم مشکی</h4>
-                                <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> چرمینه</span>
-                                <div class="reasoning-price-row">
-                                    <div class="prices">
-                                        <span class="new-price">۳,۲۰۰,۰۰۰ تومان</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="closet-preview-wrapper" id="closet-wrapper">
+                <h4>لباس های شما</h4><br>
+                <section class="clothes-grid" id="clothes-grid">
+                    <!-- item 1 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
                     </div>
-
-                    <!-- Reasoning Item 2 -->
-                    <div class="reasoning-item left-aligned">
-                        <div class="reasoning-bg">
-                            <p class="reasoning-text">شما اخیراً شلوار جین‌های زیادی پوشیدی. این کت سفید کژوال دقیقاً همون چیزیه که استایلت رو از یکنواختی در میاره و برای دورهمی‌های دوستانه عالیه!</p>
-                            <a href="#" class="wide-buy-btn">مشاهده و خرید</a>
-                        </div>
-                        <div class="reasoning-product-card" data-suggestion-card>
-                            <div class="reasoning-image">
-                                <img src="assets/white_jacket_1786547991722.jpg" alt="ژاکت سفید">
-                                <div class="reasoning-badges">
-                                    <button class="icon-btn small bookmark-btn"><i class="fa-regular fa-bookmark"></i></button>
-                                </div>
-                            </div>
-                            <div class="reasoning-info">
-                                <h4 class="reasoning-item-title">ژاکت سفید کژوال</h4>
-                                <span class="reasoning-shop-name"><i class="fa-solid fa-store"></i> بوتیک شیک</span>
-                                <div class="reasoning-price-row">
-                                    <div class="prices">
-                                        <span class="new-price">۱,۸۵۰,۰۰۰ تومان</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- item 2 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
                     </div>
+                    <!-- item 3 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/blue_top_1786548044228.jpg" alt="Top">
+                    </div>
+                    <!-- item 4 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/shopping_sneaker_1786518703474.jpg" alt="Sneaker">
+                    </div>
+                    <!-- item 5 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/sporty_outfit_1786518654738.jpg" alt="Sporty">
+                    </div>
+                    <!-- item 6 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/casual_outfit_1786518617507.jpg" alt="Casual">
+                    </div>
+                    <!-- item 7 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/white_jacket_1786547991722.jpg" alt="Jacket">
+                    </div>
+                    <!-- item 8 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/black_bag_1786548022857.jpg" alt="Bag">
+                    </div>
+                    <!-- item 9 -->
+                    <div class="clothing-sticker">
+                        <img src="assets/blue_top_1786548044228.jpg" alt="Top">
+                    </div>
+                </section>
+                
+                <div class="closet-actions">
+                    <button class="view-all-closet-btn" id="toggle-closet-btn">
+                        <span>مشاهده همه کمد</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
                 </div>
-            </section>
+            </div>
+            </div> <!-- End clothes-tab -->
         </main>
 
         <!-- Bottom Navigation -->

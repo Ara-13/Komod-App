@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Profile Tabs Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active from all tabs and contents
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            // Add active to clicked tab
+            btn.classList.add('active');
+            
+            // Show corresponding content
+            const targetId = btn.getAttribute('data-target');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+
     // Select elements
     const calendarModal = document.getElementById('calendar-modal');
     const eventModal = document.getElementById('event-modal');
@@ -143,6 +165,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Toggle full closet view
+    const toggleClosetBtn = document.getElementById('toggle-closet-btn');
+    const clothesGrid = document.getElementById('clothes-grid');
+    const closetWrapper = document.getElementById('closet-wrapper');
+    if (toggleClosetBtn && clothesGrid && closetWrapper) {
+        toggleClosetBtn.addEventListener('click', () => {
+            const isExpanded = clothesGrid.classList.contains('expanded');
+            if (isExpanded) {
+                clothesGrid.classList.remove('expanded');
+                closetWrapper.classList.remove('expanded');
+                toggleClosetBtn.classList.remove('expanded');
+                toggleClosetBtn.querySelector('span').innerText = 'مشاهده همه کمد';
+            } else {
+                clothesGrid.classList.add('expanded');
+                closetWrapper.classList.add('expanded');
+                toggleClosetBtn.classList.add('expanded');
+                toggleClosetBtn.querySelector('span').innerText = 'بستن لیست کمد';
+            }
+        });
+    }
 
     // Outfit Details Modal
     const outfitItems = document.querySelectorAll('[data-suggestion-card]');
@@ -289,4 +332,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 850);
         });
     });
+
+    // --- Viewport and Bottom Nav Constant Scanner ---
+    function keepBottomNavVisible() {
+        const appContainer = document.querySelector('.app-container');
+        const bottomNav = document.querySelector('.bottom-nav');
+        
+        if (!appContainer || !bottomNav) return;
+
+        // Sync container with actual viewport height to fix mobile URL bar issues
+        const vh = window.innerHeight;
+        appContainer.style.height = `${vh}px`;
+        
+        // Prevent body scroll which can push the container out of view
+        document.body.style.height = `${vh}px`;
+        document.body.style.minHeight = `${vh}px`;
+        document.body.style.overflow = 'hidden';
+
+        // Constantly scan if the bottom-nav is pushed outside the visible screen
+        const navRect = bottomNav.getBoundingClientRect();
+        if (navRect.bottom > vh) {
+            const currentBottom = parseFloat(window.getComputedStyle(bottomNav).bottom) || 16;
+            const overlap = navRect.bottom - vh;
+            // Push it up by the overlap amount
+            bottomNav.style.bottom = `${currentBottom + overlap + 4}px`;
+        } else if (navRect.bottom < vh - 24) {
+            // Reset to default 16px if there's too much gap (meaning viewport is fine)
+            bottomNav.style.bottom = '16px';
+        }
+    }
+
+    // Run on init
+    keepBottomNavVisible();
+    
+    // Listeners for layout changes
+    window.addEventListener('resize', keepBottomNavVisible);
+    window.addEventListener('scroll', keepBottomNavVisible, true);
+    window.addEventListener('orientationchange', keepBottomNavVisible);
+    
+    // Constant loop scanner as requested to ensure it's never lost
+    setInterval(keepBottomNavVisible, 500);
 });
