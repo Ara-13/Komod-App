@@ -373,3 +373,344 @@ document.addEventListener('DOMContentLoaded', () => {
     // Constant loop scanner as requested to ensure it's never lost
     setInterval(keepBottomNavVisible, 500);
 });
+
+// Custom Picker System
+const CustomPicker = {
+    modal: null,
+    columnsContainer: null,
+    titleEl: null,
+    currentInput: null,
+    currentDisplay: null,
+    pickerType: null,
+    columnsData: [],
+    
+    init() {
+        this.modal = document.getElementById('custom-picker-modal');
+        if (!this.modal) return;
+        
+        this.columnsContainer = document.getElementById('picker-columns');
+        this.titleEl = document.getElementById('picker-title');
+        
+        // Setup Modal Events
+        const cancelBtn = this.modal.querySelector('.picker-cancel');
+        const confirmBtn = this.modal.querySelector('.picker-confirm');
+        const overlay = this.modal;
+        
+        if (cancelBtn) cancelBtn.addEventListener('click', () => this.close());
+        if (confirmBtn) confirmBtn.addEventListener('click', () => this.confirm());
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) this.close();
+        });
+        
+        // Replace all relevant inputs
+        this.replaceInputs();
+    },
+    
+    replaceInputs() {
+        // Selects
+        const selects = document.querySelectorAll('select.form-input');
+        selects.forEach(select => this.createWrapper(select, 'select'));
+        
+        // Time Inputs
+        const times = document.querySelectorAll('input[type="time"].form-input');
+        times.forEach(time => this.createWrapper(time, 'time'));
+        
+        // Date Inputs
+        const dates = document.querySelectorAll('input[type="date"].form-input');
+        dates.forEach(date => this.createWrapper(date, 'date'));
+    },
+    
+    createWrapper(originalInput, type) {
+        if (originalInput.parentElement.classList.contains('custom-input-wrapper')) return;
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-input-wrapper';
+        
+        const display = document.createElement('div');
+        display.className = 'custom-input-display placeholder';
+        display.innerHTML = `<span>انتخاب کنید...</span><i class="fa-solid fa-chevron-down"></i>`;
+        
+        originalInput.parentNode.insertBefore(wrapper, originalInput);
+        wrapper.appendChild(display);
+        wrapper.appendChild(originalInput);
+        originalInput.classList.add('custom-input-hidden');
+        
+        // Change type to text so custom formats don't get rejected by the browser
+        if (originalInput.tagName.toLowerCase() === 'input') {
+            originalInput.type = 'text';
+        }
+        
+        // Setup initial display value if any
+        this.updateDisplay(originalInput, display, type);
+        
+        display.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.open(originalInput, type, display);
+        });
+    },
+    
+    updateDisplay(input, display, type) {
+        const val = input.value;
+        const span = display.querySelector('span');
+        if (!val) {
+            display.classList.add('placeholder');
+            span.innerText = type === 'time' ? 'ساعت' : type === 'date' ? 'تاریخ' : 'انتخاب کنید...';
+            return;
+        }
+        display.classList.remove('placeholder');
+        
+        if (type === 'select') {
+            const option = Array.from(input.options).find(o => o.value === val);
+            span.innerText = option ? option.text : val;
+        } else if (type === 'time') {
+            span.innerText = val; // e.g. 14:30
+        } else if (type === 'date') {
+            span.innerText = val; // raw value display if updated programmatically
+        }
+    },
+    
+    open(input, type, display) {
+        this.currentInput = input;
+        this.currentDisplay = display;
+        this.pickerType = type;
+        
+        let title = 'انتخاب';
+        
+        // Build Data
+        this.columnsData = [];
+        if (type === 'select') {
+            title = 'انتخاب گزینه';
+            const opts = Array.from(input.options).map(o => ({ value: o.value, label: o.text }));
+            this.columnsData.push({ id: 'select-col', data: opts, current: input.value || opts[0]?.value });
+        } else if (type === 'time') {
+            title = 'انتخاب ساعت';
+            const hours = Array.from({length: 24}, (_, i) => ({ value: String(i).padStart(2, '0'), label: String(i).padStart(2, '0') }));
+            const mins = Array.from({length: 60}, (_, i) => ({ value: String(i).padStart(2, '0'), label: String(i).padStart(2, '0') }));
+            
+            let curH = '12', curM = '00';
+            if (input.value) {
+                [curH, curM] = input.value.split(':');
+            }
+            this.columnsData.push({ id: 'min-col', data: mins, current: curM });
+            this.columnsData.push({ id: 'hour-col', data: hours, current: curH });
+        } else if (type === 'date') {
+            title = 'انتخاب تاریخ';
+            const jalaliMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+            const years = Array.from({length: 20}, (_, i) => { const y = 1395 + i; return { value: y, label: y.toString() }; });
+            const months = jalaliMonths.map((m, i) => ({ value: i + 1, label: m }));
+            const days = Array.from({length: 31}, (_, i) => ({ value: i + 1, label: (i + 1).toString() }));
+            
+            // Extract current if any, else default 1405/5/17
+            let curY = 1405, curM = 5, curD = 17;
+            if (input.value) {
+                const parts = input.value.split('/');
+                if (parts.length === 3) {
+                    curY = parseInt(parts[0]);
+                    curM = parseInt(parts[1]);
+                    curD = parseInt(parts[2]);
+                }
+            }
+            
+            this.columnsData.push({ id: 'day-col', data: days, current: curD });
+            this.columnsData.push({ id: 'month-col', data: months, current: curM });
+            this.columnsData.push({ id: 'year-col', data: years, current: curY });
+        }
+        
+        this.titleEl.innerText = title;
+        this.renderColumns();
+        this.modal.classList.add('active');
+        
+        // Wait for render then scroll to selected
+        setTimeout(() => {
+            this.scrollToCurrent();
+            this.setupScrollListeners();
+        }, 10);
+    },
+    
+    close() {
+        this.modal.classList.remove('active');
+    },
+    
+    confirm() {
+        if (!this.currentInput) return;
+        
+        // Gather values from centered items
+        const cols = Array.from(this.columnsContainer.querySelectorAll('.picker-column'));
+        const values = cols.map(col => {
+            const centerItem = this.getCenterItem(col);
+            return centerItem ? centerItem.dataset.value : null;
+        });
+        
+        let finalVal = '';
+        let displayVal = '';
+        
+        if (this.pickerType === 'select') {
+            finalVal = values[0];
+            const opt = this.columnsData[0].data.find(d => d.value == finalVal);
+            displayVal = opt ? opt.label : finalVal;
+        } else if (this.pickerType === 'time') {
+            finalVal = `${values[1]}:${values[0]}`;
+            displayVal = finalVal;
+        } else if (this.pickerType === 'date') {
+            finalVal = `${values[2]}/${values[1]}/${values[0]}`; // YYYY/MM/DD
+            const mLabel = this.columnsData[1].data.find(d => d.value == values[1]).label;
+            displayVal = `${values[0]} ${mLabel} ${values[2]}`; // e.g. 17 مرداد 1405
+        }
+        
+        this.currentInput.value = finalVal;
+        
+        // trigger change event
+        const event = new Event('change', { bubbles: true });
+        this.currentInput.dispatchEvent(event);
+        
+        // Update custom display manually with correct format if date, else fallback to updateDisplay
+        if (this.pickerType === 'date') {
+            this.currentDisplay.classList.remove('placeholder');
+            this.currentDisplay.querySelector('span').innerText = displayVal;
+        } else {
+            this.updateDisplay(this.currentInput, this.currentDisplay, this.pickerType);
+        }
+        
+        this.close();
+    },
+    
+    renderColumns() {
+        this.columnsContainer.innerHTML = '';
+        this.columnsData.forEach(colData => {
+            const col = document.createElement('div');
+            col.className = 'picker-column';
+            col.dataset.id = colData.id;
+            
+            col.insertAdjacentHTML('beforeend', `<div class="picker-item" style="pointer-events:none;color:transparent;">_</div>`);
+            col.insertAdjacentHTML('beforeend', `<div class="picker-item" style="pointer-events:none;color:transparent;">_</div>`);
+            
+            colData.data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'picker-item';
+                div.dataset.value = item.value;
+                div.innerText = item.label;
+                
+                div.addEventListener('click', () => {
+                    const containerCenter = col.clientHeight / 2;
+                    const itemCenter = div.offsetTop + (div.clientHeight / 2);
+                    // Temporarily enable smooth scrolling if not supported natively by setting scrollTop
+                    col.style.scrollBehavior = 'smooth';
+                    col.scrollTop = itemCenter - containerCenter;
+                    // Reset scroll behavior after animation to prevent issues with manual drag
+                    setTimeout(() => {
+                        col.style.scrollBehavior = '';
+                    }, 300);
+                });
+                
+                col.appendChild(div);
+            });
+            
+            col.insertAdjacentHTML('beforeend', `<div class="picker-item" style="pointer-events:none;color:transparent;">_</div>`);
+            col.insertAdjacentHTML('beforeend', `<div class="picker-item" style="pointer-events:none;color:transparent;">_</div>`);
+            
+            this.columnsContainer.appendChild(col);
+        });
+    },
+    
+    scrollToCurrent() {
+        const cols = this.columnsContainer.querySelectorAll('.picker-column');
+        cols.forEach((col, index) => {
+            const currentVal = this.columnsData[index].current;
+            const targetItem = Array.from(col.querySelectorAll('.picker-item')).find(i => i.dataset.value == currentVal);
+            
+            if (targetItem) {
+                // calculate scroll
+                const containerCenter = col.clientHeight / 2;
+                const itemCenter = targetItem.offsetTop + (targetItem.clientHeight / 2);
+                col.scrollTop = itemCenter - containerCenter;
+                this.updateSelectedVisual(col);
+            }
+        });
+    },
+    
+    setupScrollListeners() {
+        const cols = this.columnsContainer.querySelectorAll('.picker-column');
+        cols.forEach(col => {
+            let isScrolling;
+            col.addEventListener('scroll', () => {
+                window.clearTimeout(isScrolling);
+                this.updateSelectedVisual(col);
+                
+                // If it's date, we might need to update days based on month
+                isScrolling = setTimeout(() => {
+                    if (this.pickerType === 'date') this.handleDateLogic();
+                }, 100);
+            });
+        });
+    },
+    
+    updateSelectedVisual(col) {
+        const centerItem = this.getCenterItem(col);
+        const items = col.querySelectorAll('.picker-item');
+        items.forEach(i => i.classList.remove('selected'));
+        if (centerItem) {
+            centerItem.classList.add('selected');
+        }
+    },
+    
+    getCenterItem(col) {
+        const containerCenter = col.scrollTop + (col.clientHeight / 2);
+        const items = Array.from(col.querySelectorAll('.picker-item[data-value]'));
+        
+        let closestItem = null;
+        let minDiff = Infinity;
+        
+        items.forEach(item => {
+            const itemCenter = item.offsetTop + (item.clientHeight / 2);
+            const diff = Math.abs(itemCenter - containerCenter);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestItem = item;
+            }
+        });
+        return closestItem;
+    },
+    
+    handleDateLogic() {
+        const cols = Array.from(this.columnsContainer.querySelectorAll('.picker-column'));
+        const dayCol = cols[0];
+        const monthCol = cols[1];
+        
+        const monthItem = this.getCenterItem(monthCol);
+        if (!monthItem) return;
+        
+        const month = parseInt(monthItem.dataset.value);
+        let maxDays = 31;
+        if (month >= 7 && month <= 11) maxDays = 30;
+        if (month === 12) maxDays = 29;
+        
+        const days = Array.from(dayCol.querySelectorAll('.picker-item[data-value]'));
+        let needsScrollAdjustment = false;
+        
+        days.forEach(day => {
+            const dVal = parseInt(day.dataset.value);
+            if (dVal > maxDays) {
+                day.style.display = 'none';
+                if (day.classList.contains('selected')) needsScrollAdjustment = true;
+            } else {
+                day.style.display = 'flex';
+            }
+        });
+        
+        if (needsScrollAdjustment) {
+            const targetDay = days.find(d => parseInt(d.dataset.value) === maxDays);
+            if (targetDay) {
+                const containerCenter = dayCol.clientHeight / 2;
+                const itemCenter = targetDay.offsetTop + (targetDay.clientHeight / 2);
+                dayCol.scrollTop = itemCenter - containerCenter;
+            }
+        }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        CustomPicker.init();
+    }, 100);
+});
